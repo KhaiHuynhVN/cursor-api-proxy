@@ -30,7 +30,7 @@ function baseConfig(overrides: Partial<BridgeConfig> = {}): BridgeConfig {
     acpRawDebug: false,
     configDirs: [],
     multiPort: false,
-    winCmdlineMax: 30_000,
+    winCmdlineMax: 30_000, useDirect: false,
     ...overrides,
   };
 }

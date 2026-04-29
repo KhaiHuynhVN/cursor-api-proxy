@@ -70,7 +70,7 @@ function createTestConfig(overrides: Partial<BridgeConfig> = {}): BridgeConfig {
     acpRawDebug: false,
     configDirs: overrides.configDirs ?? [],
     multiPort: overrides.multiPort ?? false,
-    winCmdlineMax: 30_000,
+    winCmdlineMax: 30_000, useDirect: false,
     ...overrides,
   };
 }

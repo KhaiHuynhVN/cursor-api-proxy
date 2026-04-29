@@ -161,6 +161,16 @@ function startSingleServer(
         `- account pool: enabled with ${config.configDirs.length} configuration directories`,
       );
     }
+    console.log(
+      `- direct API: ${config.useDirect ? "yes (CURSOR_BRIDGE_DIRECT=true)" : "no"}`,
+    );
+    if (config.useDirect) {
+      import("./cursor-direct.js").then(({ captureContext }) => {
+        captureContext().catch((err: Error) => {
+          console.error(`[direct] Context pre-warm failed:`, err.message);
+        });
+      });
+    }
   });
 
   return server;

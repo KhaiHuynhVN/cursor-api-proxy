@@ -48,6 +48,8 @@ export type BridgeConfig = {
   multiPort: boolean;
   /** Windows CreateProcess command-line budget for prompt truncation (ignored on non-Windows). */
   winCmdlineMax: number;
+  /** When true, use direct HTTP/2 API instead of spawning CLI (much faster). Set CURSOR_BRIDGE_DIRECT=1. */
+  useDirect: boolean;
 };
 
 export function loadBridgeConfig(opts: EnvOptions = {}): BridgeConfig {
@@ -101,5 +103,8 @@ export function loadBridgeConfig(opts: EnvOptions = {}): BridgeConfig {
     configDirs: env.configDirs ?? [],
     multiPort: env.multiPort,
     winCmdlineMax: env.winCmdlineMax,
+    useDirect: /^(1|true|yes|on)$/i.test(
+      String(envSource.CURSOR_BRIDGE_DIRECT ?? "").trim(),
+    ),
   };
 }

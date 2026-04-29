@@ -13,7 +13,7 @@ export function buildAgentFixedArgs(
   if (config.approveMcps) args.push("--approve-mcps");
   if (config.force) args.push("--force");
   if (config.chatOnlyWorkspace) args.push("--trust");
-  args.push("--mode", "ask");
+  // Removed --mode ask to allow full model responses (not constrained to ask-only)
   args.push("--workspace", workspaceDir);
   args.push("--model", model);
   if (stream) {

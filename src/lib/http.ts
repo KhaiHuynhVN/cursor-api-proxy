@@ -1,11 +1,17 @@
 import * as http from "node:http";
 
 export function extractBearerToken(req: http.IncomingMessage): string | undefined {
+  // Check Authorization: Bearer first
   const h = req.headers["authorization"];
-  if (!h) return undefined;
-  const val = Array.isArray(h) ? h[0] : h;
-  const match = val.match(/^Bearer\s+(.+)$/i);
-  return match ? match[1] : undefined;
+  if (h) {
+    const val = Array.isArray(h) ? h[0] : h;
+    const match = val.match(/^Bearer\s+(.+)$/i);
+    if (match) return match[1];
+  }
+  // Fallback: x-api-key header (used by Anthropic SDK / CLIProxyAPI)
+  const xKey = req.headers["x-api-key"];
+  if (xKey) return Array.isArray(xKey) ? xKey[0] : xKey;
+  return undefined;
 }
 
 export function json(
